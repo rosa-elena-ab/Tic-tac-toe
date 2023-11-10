@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gato</title>
+    <style>
+        body{
+            background-image: url(fondo1.png);
+        }
+        h1, p,div {
+            margin: 1em auto;
+            text-align: center;
+            color:rgb(220, 230, 239);
+        }
+        .tablero {       
+            display: grid;
+            grid-gap: 1px;
+            grid-template-columns: repeat(3, 1fr); 
+           
+        }
+        input[class="boton"]{
+            height: 7em;
+            width: 60%;
+            font-size: 10px;
+        }
+        div {
+            width: 60vw;
+            max-width: 500px;
+            min-width: 300px;
+            margin: 0 auto;
+            padding-bottom: 1em;
+        }
+        input {
+            margin: 1em auto;
+            width: 50%;
+            min-height: 1.5em;
+        }
+        
+        input[id="iniciar"] {
+            display: block;
+            width: 20%;
+            margin: 1em auto;
+            height: 2em;
+            font-size: 1.1rem;
+            border-color: white;
+            min-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Juego de gato</h1>
+    
+    <p id="turnojugador"></p>
+    
+    <div class="tablero">
+                <input class="boton" type="button" id="0" onclick="sustituir(this)" >
+                <input class="boton" type="button" id="1" onclick="sustituir(this)">
+                <input class="boton" type="button" id="2" onclick="sustituir(this)">
+                <input class="boton" type="button" id="3" onclick="sustituir(this)">
+                <input class="boton" type="button" id="4" onclick="sustituir(this)">
+                <input class="boton" type="button" id="5" onclick="sustituir(this)">
+                <input class="boton" type="button" id="6" onclick="sustituir(this)">
+                <input class="boton" type="button" id="7" onclick="sustituir(this)">
+                <input class="boton" type="button" id="8" onclick="sustituir(this)">            
+    </div>
+    <input type="button" id="iniciar" value="comenzar">
+    <script>
+        const tablero=new Array();
+        var turno=0;
+        window.addEventListener('load',()=>{
+            var iniciar=document.getElementById("iniciar");
+            iniciar.addEventListener("click",comenzar);     
+        });    
+
+        function comenzar(){
+            turno=1;
+            document.getElementById("turnojugador").innerHTML="Da clic sobre una casilla";
+            for(var i=0;i<9;i++){
+                        document.getElementById(i).value="";
+            }
+        }
+        function sustituir(boton){
+            var contador=0;
+                if(turno==1 && boton.value !="O" && boton.value !="X"){
+                    turno=2;
+                    boton.value="X";
+                    ganador(); 
+                    for(var i=0;i<9;i++){
+                        tablero[i]=document.getElementById(i).value;
+                        if(tablero[i]==""){
+                            contador++;
+                        }
+                    }
+                    while(contador>0){
+                        if((contador==8 && tablero[0]=="X")
+                        ||(contador==8 && tablero[2]=="X")
+                        ||(contador==8 && tablero[6]=="X")
+                        ||(contador==8 && tablero[8]=="X")){
+                            turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        
+                        }
+                        if(contador==8 && tablero[1]=="X"){
+                            turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(contador==8 && tablero[3]=="X"){
+                            turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(contador==8 && tablero[5]=="X"){
+                            turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        }else if(contador==8 && tablero[7]=="X"){
+                            turno=1;
+                                document.getElementById(1).value="O"; 
+                                break; 
+                        }else if(contador==8 && tablero[4]=="X"){
+                            turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        } else if(tablero[0]=="X" && tablero[1]=="X" && tablero[2]==""){
+                             turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        } else if(tablero[0]=="O" && tablero[1]=="O" && tablero[2]==""){
+                            turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        }else if(tablero[0]=="O" && tablero[2]=="O" && tablero[1]==""){
+                             turno=1;
+                                document.getElementById(1).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="O" && tablero[1]=="O" && tablero[0]==""){
+                             turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(tablero[3]=="O" && tablero[4]=="O" && tablero[5]==""){
+                             turno=1;
+                                document.getElementById(5).value="O"; 
+                                break; 
+                        }else if(tablero[3]=="O" && tablero[5]=="O" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[4]=="O" && tablero[5]=="O" && tablero[3]==""){
+                             turno=1;
+                                document.getElementById(3).value="O"; 
+                                break; 
+                        }else if(tablero[6]=="O" && tablero[7]=="O" && tablero[8]==""){
+                             turno=1;
+                                document.getElementById(8).value="O"; 
+                                break; 
+                        }else if(tablero[6]=="O" && tablero[8]=="O" && tablero[7]==""){
+                             turno=1;
+                                document.getElementById(7).value="O"; 
+                                break; 
+                        }else if(tablero[8]=="O" && tablero[7]=="O" && tablero[6]==""){
+                             turno=1;
+                                document.getElementById(6).value="O"; 
+                                break; 
+                        } else  if(tablero[0]=="O" && tablero[4]=="O" && tablero[8]==""){
+                             turno=1;
+                                document.getElementById(8).value="O"; 
+                                break; 
+                        }else if(tablero[0]=="O" && tablero[8]=="O" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[4]=="O" && tablero[8]=="O" && tablero[0]==""){
+                             turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="O" && tablero[4]=="O" && tablero[6]==""){
+                             turno=1;
+                                document.getElementById(6).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="O" && tablero[6]=="O" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[4]=="O" && tablero[6]=="O" && tablero[2]==""){
+                             turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="O" && tablero[5]=="O" && tablero[8]==""){
+                             turno=1;
+                                document.getElementById(8).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="O" && tablero[8]=="O" && tablero[5]==""){
+                             turno=1;
+                                document.getElementById(5).value="O"; 
+                                break; 
+                        }else if(tablero[8]=="O" && tablero[5]=="O" && tablero[2]==""){
+                             turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        } else if(tablero[1]=="O" && tablero[4]=="O" && tablero[7]==""){
+                             turno=1;
+                                document.getElementById(7).value="O"; 
+                                break; 
+                        }else if(tablero[1]=="O" && tablero[7]=="O" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[7]=="O" && tablero[4]=="O" && tablero[1]==""){
+                             turno=1;
+                                document.getElementById(1).value="O"; 
+                                break; 
+                        } else if(tablero[0]=="O" && tablero[3]=="O" && tablero[6]==""){
+                             turno=1;
+                                document.getElementById(6).value="O"; 
+                                break; 
+                        }else if(tablero[0]=="O" && tablero[6]=="O" && tablero[3]==""){
+                             turno=1;
+                                document.getElementById(3).value="O"; 
+                                break; 
+                        }else if(tablero[6]=="O" && tablero[3]=="O" && tablero[0]==""){
+                             turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(tablero[0]=="X" && tablero[2]=="X" && tablero[1]==""){
+                             turno=1;
+                                document.getElementById(1).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="X" && tablero[1]=="X" && tablero[0]==""){
+                             turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(tablero[3]=="X" && tablero[4]=="X" && tablero[5]==""){
+                             turno=1;
+                                document.getElementById(5).value="O"; 
+                                break; 
+                        }else if(tablero[3]=="X" && tablero[5]=="X" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[4]=="X" && tablero[5]=="X" && tablero[3]==""){
+                             turno=1;
+                                document.getElementById(3).value="O"; 
+                                break; 
+                        }else if(tablero[6]=="X" && tablero[7]=="X" && tablero[8]==""){
+                             turno=1;
+                                document.getElementById(8).value="O"; 
+                                break; 
+                        }else if(tablero[6]=="X" && tablero[8]=="X" && tablero[7]==""){
+                             turno=1;
+                                document.getElementById(7).value="O"; 
+                                break; 
+                        }else if(tablero[8]=="X" && tablero[7]=="X" && tablero[6]==""){
+                             turno=1;
+                                document.getElementById(6).value="O"; 
+                                break; 
+                        } else  if(tablero[0]=="X" && tablero[4]=="X" && tablero[8]==""){
+                             turno=1;
+                                document.getElementById(8).value="O"; 
+                                break; 
+                        }else if(tablero[0]=="X" && tablero[8]=="X" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[4]=="X" && tablero[8]=="X" && tablero[0]==""){
+                             turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="X" && tablero[4]=="X" && tablero[6]==""){
+                             turno=1;
+                                document.getElementById(6).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="X" && tablero[6]=="X" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[4]=="X" && tablero[6]=="X" && tablero[2]==""){
+                             turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="X" && tablero[5]=="X" && tablero[8]==""){
+                             turno=1;
+                                document.getElementById(8).value="O"; 
+                                break; 
+                        }else if(tablero[2]=="X" && tablero[8]=="X" && tablero[5]==""){
+                             turno=1;
+                                document.getElementById(5).value="O"; 
+                                break; 
+                        }else if(tablero[8]=="X" && tablero[5]=="X" && tablero[2]==""){
+                             turno=1;
+                                document.getElementById(2).value="O"; 
+                                break; 
+                        } else if(tablero[1]=="X" && tablero[4]=="X" && tablero[7]==""){
+                             turno=1;
+                                document.getElementById(7).value="O"; 
+                                break; 
+                        }else if(tablero[1]=="X" && tablero[7]=="X" && tablero[4]==""){
+                             turno=1;
+                                document.getElementById(4).value="O"; 
+                                break; 
+                        }else if(tablero[7]=="X" && tablero[4]=="X" && tablero[1]==""){
+                             turno=1;
+                                document.getElementById(1).value="O"; 
+                                break; 
+                        } else if(tablero[0]=="X" && tablero[3]=="X" && tablero[6]==""){
+                             turno=1;
+                                document.getElementById(6).value="O"; 
+                                break; 
+                        }else if(tablero[0]=="X" && tablero[6]=="X" && tablero[3]==""){
+                             turno=1;
+                                document.getElementById(3).value="O"; 
+                                break; 
+                        }else if(tablero[6]=="X" && tablero[3]=="X" && tablero[0]==""){
+                             turno=1;
+                                document.getElementById(0).value="O"; 
+                                break; 
+                        }
+
+                            var aleatorio=Math.floor(Math.random() * 9);
+                        if(turno=2 && document.getElementById(aleatorio).value!="X" && document.getElementById(aleatorio).value !="O"){
+                                turno=1;
+                                document.getElementById(aleatorio).value="O"; 
+                                break; 
+                        }
+                        
+                        
+                        
+                    }  
+                }
+            
+            ganador();  
+        }
+       
+        function ganador(){ 
+            for(var i=0;i<9;i++){
+                tablero[i]=document.getElementById(i).value;
+            }
+            console.log(tablero);
+            if((tablero[0]=="X" && tablero[1]=="X" && tablero[2]=="X")
+                || (tablero[3]=="X" && tablero[4]=="X" && tablero[5]=="X")
+                || (tablero[6]=="X" && tablero[7]=="X" && tablero[8]=="X")
+                || (tablero[0]=="X" && tablero[3]=="X" && tablero[6]=="X")
+                || (tablero[1]=="X" && tablero[4]=="X" && tablero[7]=="X")
+                || (tablero[2]=="X" && tablero[5]=="X" && tablero[8]=="X")
+                || (tablero[0]=="X" && tablero[4]=="X" && tablero[8]=="X")
+                || (tablero[6]=="X" && tablero[4]=="X" && tablero[2]=="X")){
+                    
+                    alert("GANASTE");
+                    
+                }
+            if((tablero[0]=="O" && tablero[1]=="O" && tablero[2]=="O")
+                || (tablero[3]=="O" && tablero[4]=="O" && tablero[5]=="O")
+                || (tablero[6]=="O" && tablero[7]=="O" && tablero[8]=="O")
+                || (tablero[0]=="O" && tablero[3]=="O" && tablero[6]=="O")
+                || (tablero[1]=="O" && tablero[4]=="O" && tablero[7]=="O")
+                || (tablero[2]=="O" && tablero[5]=="O" && tablero[8]=="O")
+                || (tablero[0]=="O" && tablero[4]=="O" && tablero[8]=="O")
+                || (tablero[6]=="O" && tablero[4]=="O" && tablero[2]=="O")){
+                    
+                    alert("PERDISTE");
+                    
+                } 
+        }
+    </script>
+    
+</body>
+</html>
